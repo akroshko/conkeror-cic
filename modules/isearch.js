@@ -61,8 +61,7 @@ isearch_session.prototype = {
             var flags = true;
         } else {
             flags = selctrlcomp.SCROLL_SYNCHRONOUS;
-            if (isearch_scroll_center_vertically &&
-                version_compare(xulrunner_version, "12.0") >= 0)
+            if (isearch_scroll_center_vertically)
             {
                 flags |= selctrlcomp.SCROLL_CENTER_VERTICALLY;
             }
