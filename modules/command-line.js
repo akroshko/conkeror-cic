@@ -116,6 +116,9 @@ command_line_param_handler("l", false, function (path, ctx) {
         }
     });
 
+// this is done because when conkeror is called in some ways with -P it will both start with the profile and go to corresponding website
+command_line_param_handler("P", false, function (expr, ctx) {});
+
 // note `u' must be called as +u because Mozilla consumes -u
 command_line_handler("u", false, function (ctx) {
         // hack to make sure we send this command to a window
