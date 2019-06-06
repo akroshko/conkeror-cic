@@ -46,13 +46,13 @@ page_mode_activate(webpage_key_kill_mode);
 
 interactive("page-mode-key-kill-toggle","Toggle webpage-key-kill-mode",
     function (I) {
-        var i = active_page_modes.indexOf(webpage_key_kill_mode);
+        var i = active_page_modes.indexOf(webpage_key_kill_mode.name);
         if (i == -1) {
             page_mode_activate(webpage_key_kill_mode);
         } else {
             page_mode_deactivate(webpage_key_kill_mode);
         }
     });
-define_key(content_buffer_normal_keymap,"C-c k","page-mode-key-kill-toggle");
+define_key(default_global_keymap,"C-c k","page-mode-key-kill-toggle");
 
 provide("webpage-key-kill");
