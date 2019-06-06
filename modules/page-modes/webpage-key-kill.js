@@ -40,8 +40,19 @@ define_page_mode("webpage-key-kill-mode",
         buffer.browser.removeEventListener("keyup", key_kill_event_kill, true);
         buffer.browser.removeEventListener("keydown", key_kill_event_kill, true);
     },
-    $display_name = "Key-kill");
+    $display_name = "Key-kill (C-c k)");
 
 page_mode_activate(webpage_key_kill_mode);
+
+interactive("page-mode-key-kill-toggle","Toggle webpage-key-kill-mode",
+    function (I) {
+        var i = active_page_modes.indexOf(webpage_key_kill_mode);
+        if (i == -1) {
+            page_mode_activate(webpage_key_kill_mode);
+        } else {
+            page_mode_deactivate(webpage_key_kill_mode);
+        }
+    });
+define_key(content_buffer_normal_keymap,"C-c k","page-mode-key-kill-toggle");
 
 provide("webpage-key-kill");
