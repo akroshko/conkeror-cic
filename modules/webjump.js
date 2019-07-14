@@ -7,18 +7,20 @@
  * COPYING file.
 **/
 
-define_keywords("$alternative", "$completer", "$doc", "$post_data",
+define_keywords("$alternative", "$completer", "$doc", "$post_data", "$profile"
                 "$require_match");
 function webjump (name, handler) {
     keywords(arguments,
              $alternative = null,
-             $require_match = false);
+             $require_match = false,
+             $profile = null);
     this.name = name;
     this.alternative = arguments.$alternative;
     this.completer = arguments.$completer;
     this.doc = arguments.$doc;
     this.post_data = arguments.$post_data;
     this.require_match = arguments.$require_match;
+    this.profile = arguments.$profile;
     if (typeof handler == "function") {
         if (handler.length == 0)
             this.argument = false;
