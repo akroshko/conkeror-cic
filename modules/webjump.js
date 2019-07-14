@@ -7,7 +7,7 @@
  * COPYING file.
 **/
 
-define_keywords("$alternative", "$completer", "$doc", "$post_data", "$profile"
+define_keywords("$alternative", "$completer", "$doc", "$post_data", "$profile",
                 "$require_match");
 function webjump (name, handler) {
     keywords(arguments,
