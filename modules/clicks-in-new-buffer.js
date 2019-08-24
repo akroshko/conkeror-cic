@@ -32,6 +32,8 @@ function find_tag_in_parents (tag, element) {
 }
 
 function open_link_in_new_buffer (event) {
+    // reset handler for each new command
+    g_open_document_for_current_command = false;
     if (event.button != clicks_in_new_buffer_button)
         return;
     let element = event.target;
@@ -50,11 +52,18 @@ function open_link_in_new_buffer (event) {
     let spec = load_spec(anchor);
     let window = this.ownerDocument.defaultView;
     let buffer = window.buffers.current;
-    create_buffer(window,
-                  buffer_creator(content_buffer,
-                                 $opener = buffer,
-                                 $load = spec),
-                  clicks_in_new_buffer_target);
+    let mime_type=mime_type_from_uri(load_spec_uri(spec));
+    if (mime_type == "application/pdf") {
+        g_open_document_for_current_command = true;
+        buffer.load(spec);
+        return;
+    } else {
+        create_buffer(window,
+                      buffer_creator(content_buffer,
+                                     $opener = buffer,
+                                     $load = spec),
+                      clicks_in_new_buffer_target);
+    }
 }
 
 function clicks_in_new_buffer_add_listener (buffer) {

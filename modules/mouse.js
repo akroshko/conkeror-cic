@@ -23,6 +23,9 @@ define_variable (
 );
 
 function handle_mouse_click (event) {
+    // reset handler for each new command
+    g_open_document_for_current_command = false;
+
     var chord = 0;
 
     // Translate MouseEvent.button events into MouseEvent.buttons events.
