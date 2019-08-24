@@ -53,7 +53,7 @@ function open_link_in_new_buffer (event) {
     let window = this.ownerDocument.defaultView;
     let buffer = window.buffers.current;
     let mime_type=mime_type_from_uri(load_spec_uri(spec));
-    if (mime_type == "application/pdf") {
+    if (mime_type == "application/djvu" || mime_type == "application/epub+zip" || mime_type == "application/pdf") {
         g_open_document_for_current_command = true;
         buffer.load(spec);
         return;
