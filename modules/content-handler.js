@@ -209,6 +209,8 @@ function content_handler_prompt (ctx) {
 }
 
 
+var g_open_document_for_current_command = false;
+
 /**
  * download_helper implements nsIHelperAppLauncherDialog.
  *
@@ -229,15 +231,16 @@ download_helper.prototype = {
             ctx.abort(); //XXX: impolite; need better solution.
             return;
         }
-        dumpln("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        dumpln(dump_obj(launcher));
-        dumpln(dump_obj(context));
-        dumpln(dump_obj(reason));
         try {
             // is there anything in content_handlers for this object?
             var mime_type = launcher.MIMEInfo.MIMEType;
-            var action = content_handlers.get(mime_type) ||
-                content_handler_prompt;
+            // TODO: just pdf for now
+            if (g_open_document_for_current_command == true && mime_type == "application/pdf") {
+                var action = content_handler_open_default_viewer;
+            } else {
+                var action = content_handlers.get(mime_type) ||
+                    content_handler_prompt;
+            }
             spawn(action(ctx));
         } catch (e) {
             handle_interactive_error(ctx.window, e);
