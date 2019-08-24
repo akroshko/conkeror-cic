@@ -43,8 +43,9 @@ function interactive_error (str) {
 }
 interactive_error.prototype.__proto__ = Error.prototype;
 
-
 function interactive_context (buffer) {
+    // reset handler for each new command
+    g_open_document_for_current_command = false;
     this.local = conkeror;
     this.buffer = buffer;
     if (buffer) {

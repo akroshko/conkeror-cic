@@ -32,6 +32,8 @@ function find_tag_in_parents (tag, element) {
 }
 
 function open_link_in_new_buffer (event) {
+    // reset handler for each new command
+    g_open_document_for_current_command = false;
     if (event.button != clicks_in_new_buffer_button)
         return;
     let element = event.target;
