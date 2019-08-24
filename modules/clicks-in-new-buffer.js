@@ -48,8 +48,19 @@ function open_link_in_new_buffer (event) {
     if (clicks_in_new_buffer_ev_stop_prop)
         event.stopPropagation();
     let spec = load_spec(anchor);
+    let mime_type=mime_type_from_uri(load_spec_uri(spec));
     let window = this.ownerDocument.defaultView;
     let buffer = window.buffers.current;
+    dumpln("================================================================================");
+    dumpln(mime_type);
+    if (mime_type == "application/pdf") {
+        dumpln("Here");
+        let old_handler = content_handlers.get("application/pdf");
+        content_handlers.set("application/pdf", content_handler_open_default_viewer);
+        buffer.load(spec);
+        content_handlers.set("application/pdf", old_handler);
+        return;
+    }
     create_buffer(window,
                   buffer_creator(content_buffer,
                                  $opener = buffer,

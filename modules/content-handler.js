@@ -229,6 +229,10 @@ download_helper.prototype = {
             ctx.abort(); //XXX: impolite; need better solution.
             return;
         }
+        dumpln("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        dump_obj(launcher);
+        dump_obj(context);
+        dump_obj(reason);
         try {
             // is there anything in content_handlers for this object?
             var mime_type = launcher.MIMEInfo.MIMEType;
