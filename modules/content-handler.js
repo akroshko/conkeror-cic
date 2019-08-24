@@ -232,10 +232,11 @@ download_helper.prototype = {
             return;
         }
         try {
+            // TODO: akroshko: ctx has really useful information for controlling destination of download
             // is there anything in content_handlers for this object?
             var mime_type = launcher.MIMEInfo.MIMEType;
-            // TODO: just pdf for now
-            if (g_open_document_for_current_command == true && mime_type == "application/pdf") {
+            // TODO: just a few things for now
+            if ((ctx.buffer.current_uri.scheme == "file" || g_open_document_for_current_command == true) && (mime_type == "application/djvu" || mime_type == "application/epub+zip" || mime_type == "application/pdf")) {
                 var action = content_handler_open_default_viewer;
             } else {
                 var action = content_handlers.get(mime_type) ||
