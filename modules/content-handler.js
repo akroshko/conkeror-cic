@@ -230,9 +230,9 @@ download_helper.prototype = {
             return;
         }
         dumpln("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        dump_obj(launcher);
-        dump_obj(context);
-        dump_obj(reason);
+        dumpln(dump_obj(launcher));
+        dumpln(dump_obj(context));
+        dumpln(dump_obj(reason));
         try {
             // is there anything in content_handlers for this object?
             var mime_type = launcher.MIMEInfo.MIMEType;
