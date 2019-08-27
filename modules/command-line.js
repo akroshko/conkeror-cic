@@ -18,12 +18,23 @@ define_variable("url_remoting_fn", load_url_in_new_window,
     "load_url_in_new_window (default), load_url_in_new_buffer, or "+
     "load_url_in_current_buffer.");
 
+var load_url_accept_pattern=/[A-Za-z0-9]\.[A-Za-z0-9]/;
+
 /*
  * load_url_in_new_window is a function intended for use as
  * a value of `url_remoting_fn'.  Every url given on the
  * command line will be loaded in a new window.
  */
 function load_url_in_new_window (url, ctx) {
+    // TODO: make configuraable
+    // prevent poorly defined arguments from being opened
+    // there are a number of common English words that open to objectionable sites
+    // for now just one dot is needed
+    // eventually make sure https: and file: are there
+    if (! url.match(load_url_accept_pattern)) {
+        dumpln("w: not opening url corresponding to " + url);
+        url = "about:blank"
+    }
     make_window(buffer_creator(content_buffer,
                                $opener = ctx,
                                $load = url));
@@ -36,6 +47,10 @@ function load_url_in_new_window (url, ctx) {
  * recently used window, or a new window if none exist.
  */
 function load_url_in_new_buffer (url, ctx) {
+    if (! url.match(load_url_accept_pattern)) {
+        dumpln("w: not opening url corresponding to " + url);
+        url = "about:blank"
+    }
     create_buffer_in_current_window(
         buffer_creator(content_buffer,
                        $opener = ctx,
@@ -50,6 +65,10 @@ function load_url_in_new_buffer (url, ctx) {
  * or a new window if none exist.
  */
 function load_url_in_new_buffer_background (url, ctx) {
+    if (! url.match(load_url_accept_pattern)) {
+        dumpln("w: not opening url corresponding to " + url);
+        url = "about:blank"
+    }
     create_buffer_in_current_window(
         buffer_creator(content_buffer,
                        $opener = ctx,
