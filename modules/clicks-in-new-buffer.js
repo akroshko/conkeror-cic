@@ -40,11 +40,11 @@ define_variable("alt_new_buffer",
     "Does holding alt key along with mouse click open up new buffer.");
 
 define_variable("shift_new_buffer",
-    true,
+    false,
     "Does holding shift key along with mouse click open up new buffer.");
 
 define_variable("ctrl_new_profile",
-    true,
+    false,
     "Does holding control key along with mouse click open up new profile.");
 
 define_variable("alt_new_profile",
