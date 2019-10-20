@@ -31,38 +31,87 @@ function find_tag_in_parents (tag, element) {
     return null;
 }
 
+define_variable("ctrl_new_buffer",
+    false,
+    "Does holding control key along with mouse click open up new buffer.");
+
+define_variable("alt_new_buffer",
+    false,
+    "Does holding alt key along with mouse click open up new buffer.");
+
+define_variable("shift_new_buffer",
+    true,
+    "Does holding shift key along with mouse click open up new buffer.");
+
+define_variable("ctrl_new_profile",
+    true,
+    "Does holding control key along with mouse click open up new profile.");
+
+define_variable("alt_new_profile",
+    false,
+    "Does holding alt key along with mouse click open up new profile.");
+
+define_variable("shift_new_profile",
+    false,
+    "Does holding shift key along with mouse click open up new profile.");
+
+define_variable("new_profile_name",
+    "default2",
+    "The new profile to open the clicked link into.");
+
+define_variable("new_profile_command",
+    "conkeror -P default2",
+    "The new profile to open the clicked link into.");
+
+
 function open_link_in_new_buffer (event) {
     // reset handler for each new command
     g_open_document_for_current_command = false;
-    if (event.button != clicks_in_new_buffer_button)
+    var new_buffer=false;
+    var new_profile=false;
+    if (event.button == clicks_in_new_buffer_button || (event.ctrlKey && ctrl_new_buffer) || (event.altKey && alt_new_buffer) || (event.shiftKey && shift_new_buffer)) {
+        new_buffer = true;
+    } else if (event.button == clicks_in_new_buffer_button || (event.ctrlKey && ctrl_new_profile) || (event.altKey && alt_new_profile) || (event.shiftKey && shift_new_profile)) {
+        new_profile=true;
+    } else {
         return;
+    }
+
     let element = event.target;
     let anchor = null;
     if (element instanceof Ci.nsIDOMHTMLAnchorElement ||
-        element instanceof Ci.nsIDOMHTMLAreaElement)
-    {
+        element instanceof Ci.nsIDOMHTMLAreaElement) {
         anchor = element;
     } else
         anchor = find_tag_in_parents("a", element);
     if (anchor == null)
         return;
     event.preventDefault();
-    if (clicks_in_new_buffer_ev_stop_prop)
+    if (clicks_in_new_buffer_ev_stop_prop) {
         event.stopPropagation();
+    }
     let spec = load_spec(anchor);
     let window = this.ownerDocument.defaultView;
     let buffer = window.buffers.current;
     let mime_type=mime_type_from_uri(load_spec_uri(spec));
+    // TODO: use new profile for this?
     if (mime_type == "application/djvu" || mime_type == "application/epub+zip" || mime_type == "application/pdf") {
         g_open_document_for_current_command = true;
         buffer.load(spec);
         return;
     } else {
-        create_buffer(window,
-                      buffer_creator(content_buffer,
-                                     $opener = buffer,
-                                     $load = spec),
-                      clicks_in_new_buffer_target);
+        if (new_profile == true) {
+            var url=spec.uri;
+            var cmd_str=new_profile_command + " " + url;
+            dumpln("i: " + cmd_str);
+            shell_command_blind(cmd_str);
+        } else {
+            create_buffer(window,
+                          buffer_creator(content_buffer,
+                                         $opener = buffer,
+                                         $load = spec),
+                          clicks_in_new_buffer_target);
+        }
     }
 }
 
