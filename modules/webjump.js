@@ -190,44 +190,4 @@ webjump_completer.prototype = {
     }
 };
 
-
-/*
- * Built-in webjumps
- */
-
-function define_delicious_webjumps (username) {
-    define_webjump("delicious", "http://www.delicious.com/" + username + "/%s",
-                   $alternative = "http://www.delicious.com/" + username);
-    define_webjump("adelicious", "javascript:location.href='http://www.delicious.com/save"+
-                   "?v=2&url='+encodeURIComponent(location.href)+'&title='+"+
-                   "encodeURIComponent(document.title);");
-    define_webjump("sdelicious", "http://www.delicious.com/search?p=%s&u="+username+
-                   "&chk=&context=userposts&fr=del_icio_us&lc=1");
-    define_webjump("sadelicious", "http://www.delicious.com/search/all?search=%s");
-}
-
-function define_lastfm_webjumps (username) {
-    if (! username) username = "";
-    define_webjump("lastfm", "http://www.last.fm/user/"+username);
-    define_webjump("lastfm-user", "http://www.last.fm/user/%s");
-    define_webjump("lastfm-music", "http://www.last.fm/search?m=all&q=%s");
-    define_webjump("lastfm-group", "http://www.last.fm/users/groups?s_bio=%s");
-    define_webjump("lastfm-tag", "http://www.last.fm/search?m=tag&q=%s");
-    define_webjump("lastfm-label", "http://www.last.fm/search?m=label&q=%s");
-    define_webjump("lastfm-event", "http://www.last.fm/events?by=artists&q=%s");
-}
-
-function define_default_webjumps () {
-    define_webjump("conkerorwiki",
-                   "http://conkeror.org/?action=fullsearch&context=60&value=%s&fullsearch=Text");
-    define_webjump("lucky",      "https://www.google.com/search?q=%s&btnI=I'm Feeling Lucky");
-    define_webjump("maps",       "https://maps.google.com/?q=%s");
-    define_webjump("scholar",    "https://scholar.google.com/scholar?q=%s");
-    define_webjump("slang",      "https://www.urbandictionary.com/define.php?term=%s");
-    define_webjump("dictionary", "http://dictionary.reference.com/search?q=%s");
-    define_webjump("image",      "https://www.google.com/images?q=%s");
-}
-
-define_default_webjumps();
-
 provide("webjump");
