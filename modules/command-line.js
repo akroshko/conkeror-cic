@@ -18,7 +18,7 @@ define_variable("url_remoting_fn", load_url_in_new_window,
     "load_url_in_new_window (default), load_url_in_new_buffer, or "+
     "load_url_in_current_buffer.");
 
-var load_url_accept_pattern=/[A-Za-z0-9]\.[A-Za-z0-9]/;
+var load_url_accept_pattern=/[A-Za-z0-9 ]\.[A-Za-z0-9 ]/;
 
 /*
  * load_url_in_new_window is a function intended for use as
