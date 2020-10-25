@@ -55,6 +55,9 @@ function load_url_in_new_buffer (url, ctx) {
         dumpln("w: not opening url corresponding to " + url);
         url = "about:blank"
     }
+    if (url.match(/%/g)) {
+        url = decodeURIComponent(url);
+    }
     create_buffer_in_current_window(
         buffer_creator(content_buffer,
                        $opener = ctx,
@@ -73,6 +76,9 @@ function load_url_in_new_buffer_background (url, ctx) {
         dumpln("w: not opening url corresponding to " + url);
         url = "about:blank"
     }
+    if (url.match(/%/g)) {
+        url = decodeURIComponent(url);
+    }
     create_buffer_in_current_window(
         buffer_creator(content_buffer,
                        $opener = ctx,
@@ -90,6 +96,9 @@ function load_url_in_new_buffer_background (url, ctx) {
  */
 function load_url_in_current_buffer (url, ctx) {
     var win = get_recent_conkeror_window();
+    if (url.match(/%/g)) {
+        url = decodeURIComponent(url);
+    }
     if (win) {
         browser_object_follow(win.buffers.current, OPEN_CURRENT_BUFFER, url);
     } else {
