@@ -18,7 +18,8 @@ define_variable("url_remoting_fn", load_url_in_new_window,
     "load_url_in_new_window (default), load_url_in_new_buffer, or "+
     "load_url_in_current_buffer.");
 
-var load_url_accept_pattern=/[A-Za-z0-9 ]\.[A-Za-z0-9 ]/;
+// akroshko: changed to allow escaped characters
+var load_url_accept_pattern=/[A-Za-z0-9%]\.[A-Za-z0-9%]/;
 
 /*
  * load_url_in_new_window is a function intended for use as
@@ -34,6 +35,9 @@ function load_url_in_new_window (url, ctx) {
     if (! url.match(load_url_accept_pattern)) {
         dumpln("w: not opening url corresponding to " + url);
         url = "about:blank"
+    }
+    if (url.match(/%/g)) {
+        url = decodeURIComponent(url);
     }
     make_window(buffer_creator(content_buffer,
                                $opener = ctx,
