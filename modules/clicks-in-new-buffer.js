@@ -84,6 +84,7 @@ function open_link_in_new_buffer (event) {
     g_open_document_for_current_command = false;
     var new_buffer=false;
     var new_profile=false;
+    var new_app=false;
     if (event.button == clicks_in_new_buffer_button || (event.ctrlKey && ctrl_new_buffer) || (event.altKey && alt_new_buffer) || (event.shiftKey && shift_new_buffer)) {
         new_buffer = true;
     } else if (event.button == clicks_in_new_buffer_button || (event.ctrlKey && ctrl_new_profile) || (event.altKey && alt_new_profile) || (event.shiftKey && shift_new_profile)) {
