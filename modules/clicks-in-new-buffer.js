@@ -75,7 +75,7 @@ define_variable("shift_new_app",
     false,
     "Does holding shift key along with mouse click open up new app.");
 
-define_variable("new_profile_command",
+define_variable("new_app_command",
     "chromium",
     "The new app to open the clicked link into.");
 
