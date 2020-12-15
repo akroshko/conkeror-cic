@@ -63,6 +63,21 @@ define_variable("new_profile_command",
     "conkeror -P default2",
     "The new profile to open the clicked link into.");
 
+define_variable("ctrl_new_app",
+    false,
+    "Does holding control key along with mouse click open up new app.");
+
+define_variable("alt_new_app",
+    false,
+    "Does holding alt key along with mouse click open up new app.");
+
+define_variable("shift_new_app",
+    false,
+    "Does holding shift key along with mouse click open up new app.");
+
+define_variable("new_profile_command",
+    "chromium",
+    "The new app to open the clicked link into.");
 
 function open_link_in_new_buffer (event) {
     // reset handler for each new command
@@ -73,6 +88,8 @@ function open_link_in_new_buffer (event) {
         new_buffer = true;
     } else if (event.button == clicks_in_new_buffer_button || (event.ctrlKey && ctrl_new_profile) || (event.altKey && alt_new_profile) || (event.shiftKey && shift_new_profile)) {
         new_profile=true;
+    } else if (event.button == clicks_in_new_buffer_button || (event.ctrlKey && ctrl_new_app) || (event.altKey && alt_new_app) || (event.shiftKey && shift_new_app)) {
+        new_app=true;
     } else {
         return;
     }
@@ -105,6 +122,12 @@ function open_link_in_new_buffer (event) {
             var cmd_str=new_profile_command + " " + url;
             dumpln("i: " + cmd_str);
             shell_command_blind(cmd_str);
+        else if (new_app == true) {
+            var url=spec.uri;
+            var cmd_str=new_app_command + " " + url;
+            dumpln("i: " + cmd_str);
+            shell_command_blind(cmd_str);
+        }
         } else {
             create_buffer(window,
                           buffer_creator(content_buffer,
