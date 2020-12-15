@@ -122,7 +122,7 @@ function open_link_in_new_buffer (event) {
             var cmd_str=new_profile_command + " " + url;
             dumpln("i: " + cmd_str);
             shell_command_blind(cmd_str);
-        else if (new_app == true) {
+        } else if (new_app == true) {
             var url=spec.uri;
             var cmd_str=new_app_command + " " + url;
             dumpln("i: " + cmd_str);
