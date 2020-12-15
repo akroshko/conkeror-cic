@@ -127,7 +127,6 @@ function open_link_in_new_buffer (event) {
             var cmd_str=new_app_command + " " + url;
             dumpln("i: " + cmd_str);
             shell_command_blind(cmd_str);
-        }
         } else {
             create_buffer(window,
                           buffer_creator(content_buffer,
