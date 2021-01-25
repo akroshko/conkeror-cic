@@ -278,6 +278,7 @@ function handle_command_line (cmdline) {
         dumpln("Error processing command line.");
         dump_error(e);
     }
+    dumpln('i: conkeror started!')
     conkeror_started = true;
 }
 
